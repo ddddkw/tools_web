@@ -10,8 +10,7 @@ export async function bootstrap() {
     console.log("[react16] react app bootstraped");
 }
 
-export async function mount(props: any) {
-    console.log("[react16] props from main framework", props);
+export async function mount(props) {
     ReactDOM.render(
         <BrowserRouter
             basename={window.__POWERED_BY_QIANKUN__ ? "tools_web" : undefined}
@@ -24,7 +23,7 @@ export async function mount(props: any) {
     );
 }
 
-export async function unmount(props: any) {
+export async function unmount(props) {
     const { container } = props;
     ReactDOM.unmountComponentAtNode(
         container
