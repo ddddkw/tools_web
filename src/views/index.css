@@ -1,0 +1,10 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+}
+.bodyContainer {
+    display: flex;
+    height: calc(100vh - 80px);
+    width: 100%;
+    justify-content: space-between;
+}

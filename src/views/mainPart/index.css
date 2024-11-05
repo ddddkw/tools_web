@@ -1,0 +1,4 @@
+.mainPart {
+    width: calc(100% - 632px);
+    position: relative;
+}

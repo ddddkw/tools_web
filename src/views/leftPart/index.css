@@ -1,0 +1,12 @@
+.leftContainer {
+    width: 332px;
+}
+.componentItem{
+    width: 80px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 15px;
+    border: 1px solid rgb(187, 181, 181);
+    border-radius: 4px;
+    padding: 10px;
+}

@@ -1,4 +1,9 @@
 module.exports = {
+    parser: '@typescript-eslint/parser',
+    extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended', // 使用 TypeScript ESLint 插件的推荐规则
+    ],
     // 配置项
     env: {
         browser: true, // 浏览器环境
@@ -14,6 +19,10 @@ module.exports = {
         // 如果使用 TypeScript 解析器，可以添加以下配置：
         parser: '@typescript-eslint/parser',
         // project: './tsconfig.json', // 指定 tsconfig.json 文件的位置（如果适用）
+    },
+    // 全局变量声明（如果需要）
+    globals: {
+        __webpack_public_path__: 'readonly',
     },
     // 指定要使用的插件
     plugins: [
