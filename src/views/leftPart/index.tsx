@@ -2,11 +2,13 @@ import './index.css'
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import * as components from './components/exportAll'
+import Store from "../../store";
 export default function leftPart(){
     // 直接将数据挂到window上
     const onDragStart = (name: string) => {
         return () => {
-            window.nowCom = name
+            // 在redux中记录下当前拖拽的节点
+            Store.dispatch({type: 'changeNowCom', value: name});
         }
     }
     const renderComponet = () => {
@@ -36,7 +38,7 @@ export default function leftPart(){
         }
     ];
     const onChange = () => {
-
+        console.log(111)
     }
     return (
         <div className={"leftContainer"}>

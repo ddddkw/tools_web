@@ -1,16 +1,21 @@
 import './index.css'
 import {useRef, useState} from "react";
 import * as components from '../leftPart/components/exportAll'
+import Store from "../../store";
+import {subscribeHook} from "../../store/subscribe";
 export default function mainPart(){
     interface ComJson {
         comType: string,
         style?: any,
         comId: string,
     }
-    const [comList, setComList] = useState<ComJson  []>([])
-    const [dragCom, setDragCom] = useState<ComJson | null>(null)
+    // 拿到当前拖拽的节点类型
+    const nowCom = Store.getState().dragCom
+    const comList = JSON.parse(JSON.stringify(Store.getState().comList))
+    // const [dragCom, setDragCom] = useState<ComJson | null>(null)
     // 当前选中节点的comId
     const [selectId, setSelectId] = useState<string>('')
+    const [dragComId, setDragComId] = useState<string>('')
     // 用来保存鼠标的开始位置和结束位置
     const distance = useRef({
         startLeft: void 0,
@@ -18,6 +23,7 @@ export default function mainPart(){
         endLeft: void 0,
         endTop: void 0
     })
+    subscribeHook()
     const onDrop = (e: any) => {
         // 鼠标的结束位置
         distance.current.endLeft = e.clientX;
@@ -27,12 +33,15 @@ export default function mainPart(){
         const endTop = e.clientY-80;
         let style:any;
         const comId = `comId_${Date.now()}`
-        if(window.nowCom === 'renderCom' && dragCom && dragCom.style) {
-            dragCom.style = {
-                ...dragCom.style,
-                left: parseInt(dragCom.style.left) + (e.clientX - (distance.current.startLeft || 0)) + 'px',
-                top: parseInt(dragCom.style.top) + (e.clientY - (distance.current.startTop || 0)) + 'px'
+        if(dragComId) {
+            const node = comList.find((item:ComJson) => item.comId === dragComId)
+            node.style = {
+                ...node.style,
+                left: parseInt(node.style.left) + (e.clientX - (distance.current.startLeft || 0)) + 'px',
+                top: parseInt(node.style.top) + (e.clientY - (distance.current.startTop || 0)) + 'px'
             }
+            // 切记，拖拽完组件要记得清空这个id
+            setDragComId('')
         }else{
             style = {
                 position: 'absolute',
@@ -41,17 +50,17 @@ export default function mainPart(){
                 zIndex:100
             }
             const comNode = {
-                comType: window.nowCom,
+                comType: nowCom,
                 style,
                 comId
             }
             comList.push(comNode)
-            window.renderCom = comNode;
-            window.comList = comList;
-            window.setComList = setComList
+            // 更新Store，从而更新画布区
+            Store.dispatch({type: 'changeComList', value: comList})
             setSelectId(comId)
         }
-        setComList([...comList])
+        // 更新Store，从而更新画布区
+        Store.dispatch({type: 'changeComList', value: comList})
     }
     // 阻止浏览器的默认行为
     const onDragEnter = (e: any) => {
@@ -65,9 +74,8 @@ export default function mainPart(){
     // 画布区的组件拖拽方法
     const onDragStart = (com: ComJson) => {
         return (e:any) => {
-            // 设置拖拽的节点和nowCom的固定值
-            window.nowCom = 'renderCom';
-            setDragCom(com);
+            // 在移动区内进行移动时，记录下移动的结点的唯一标识
+            setDragComId(com.comId);
             // 开始位置
             distance.current.startLeft = e.clientX;
             distance.current.startTop = e.clientY;
@@ -77,16 +85,12 @@ export default function mainPart(){
         return () => {
             // 点击事件设置选中节点的ID
             setSelectId(com.comId)
-            // 所需要用到的组件标识符先挂载在window上，后面会使用redux进行替换
-            window.renderCom = com;
-            window.comList = comList;
-            window.setComList = setComList
         }
     }
     return (
         <div onDrop={onDrop} onDragOver={onDragOver} onDragEnter={onDragEnter} className='mainPart'>
             {
-                comList.map(com => {
+                comList.map((com:ComJson) => {
                     const Com = components[com.comType as keyof typeof components];
                     // 新加的代码，将style传递给组件
                     return (
