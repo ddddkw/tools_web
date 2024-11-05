@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import {createRoot} from "react-dom/client";
 
 export async function bootstrap() {
     console.log("[react16] react app bootstraped");
@@ -31,13 +32,16 @@ export async function unmount(props) {
             : document.querySelector("#root")
     );
 }
-// @ts-ignore
 if (!window.__POWERED_BY_QIANKUN__) {
-    ReactDOM.render(
+    const rootElement = document.getElementById('root');
+    if (!rootElement) {
+        throw new Error('Failed to find the root element');
+    }
+
+    const root = createRoot(rootElement);
+    root.render(
         <BrowserRouter>
             <App />
-        </BrowserRouter>,
-        document.getElementById("root")
-    );
+        </BrowserRouter>)
 }
 reportWebVitals();
