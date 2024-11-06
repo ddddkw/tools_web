@@ -5,7 +5,16 @@
 }
 .buttonBody {
     float: right;
+    display: flex;
+    height: 100%;
+    align-items: center;
 }
 .buttonItem {
+    margin-right: 15px;
+}
+.gitHubIcon {
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
     margin-right: 15px;
 }
