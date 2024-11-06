@@ -1,5 +1,7 @@
 import { buttonAttribute } from './components/buttonAttributes'
 import { iconAttribute } from './components/iconAttributes'
+import {inputAttributes} from "./components/inputAttributes";
+
 interface AttributeMap {
     [key: string]: ComAttribute[]
 }
@@ -13,7 +15,8 @@ interface ComAttribute {
 }
 const attributeMap: AttributeMap = {
     Button: buttonAttribute,
-    Icon: iconAttribute
+    Icon: iconAttribute,
+    Input:inputAttributes
 }
 export {
     attributeMap

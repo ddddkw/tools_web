@@ -12,7 +12,7 @@ export default function leftPart(){
         }
     }
     const renderComponet = () => {
-        return <div className="componetGroup">
+        return <div className="componentGroup">
             {
                 Object.keys(components).map(name => {
                     return <div key={name} className='componentItem'>
