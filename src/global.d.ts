@@ -4,6 +4,7 @@ interface Window {
     comList: any;
     setComList: any
 }
+// 所有扩展名为 .png 的文件都是模块，返回类型为 string（即文件的 URL）
 declare module '*.png';
 declare module '*.jpg';
 declare module '*.jpeg';

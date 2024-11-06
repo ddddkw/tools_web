@@ -63,7 +63,7 @@ export default function rightPart(){
     }
 
     return (
-        <div className='rightCom'>
+        <div >
             <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
         </div>
     )

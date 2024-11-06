@@ -1,6 +1,14 @@
 .leftContainer {
+    position: relative;
     width: 300px;
     box-shadow: 2px 0 0 0 rgb(209, 203, 203);
+    transition: width 0.5s ease;
+}
+.noLeftContainer {
+    position: relative;
+    width: 0px;
+    box-shadow: 2px 0 0 0 rgb(209, 203, 203);
+    transition: width 0.5s ease;
 }
 .componentGroup {
     display: flex;
@@ -16,4 +24,12 @@
 }
 .ant-tabs-tab {
     margin: 0px!important;
+}
+.flag {
+    top: 20px;
+    right: -40px;
+    font-size: 30px;
+    position: absolute;
+    z-index: 1000;
+    cursor: pointer;
 }

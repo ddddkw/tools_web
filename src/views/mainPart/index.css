@@ -1,5 +1,5 @@
 .mainPart {
-    width: calc(100% - 600px);
+    width: 100%;
     position: relative;
     background-color: #f2f2f2;
 }

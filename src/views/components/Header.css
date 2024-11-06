@@ -1,7 +1,7 @@
 .HeaderContainer {
     height: 80px;
     line-height: 80px;
-    box-shadow: 0 0 2px 2px rgb(209, 203, 203);
+    box-shadow: 0 0 1px 1px rgb(209, 203, 203);
 }
 .buttonBody {
     float: right;
