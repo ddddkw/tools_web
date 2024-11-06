@@ -3,13 +3,21 @@ import {Tabs} from 'antd';
 import type { TabsProps } from 'antd';
 import {attributeMap} from "./staticUtils/attributesMaps";
 import InputComponent from './staticComponents/inputComponent'
+import Store from "../../store";
 import {useState} from "react";
-
+import {subscribeHook} from "../../store/subscribe";
 export default function rightPart(){
+    // 将subscribeHook放在最上面的原因是，需要确保在访问store redux中的状态之前已经成功的订阅了store的变化
+    subscribeHook()
+    const comList = JSON.parse(JSON.stringify(Store.getState().comList))
+    const selectCom = Store.getState().selectCom
+    const selectNode = comList.find((item: any) => item.comId === selectCom)
     const getAttributePanel = () => {
-        const comType = window.renderCom?.comType;
+        // 获取组件类型
+        const comType = selectNode?.comType;
         // 拿到组件对应的属性列表
         const comAttributeList = attributeMap[comType] || []
+        console.log(comAttributeList,'comAttributeList')
         return (
             <div>
                 {
@@ -17,7 +25,7 @@ export default function rightPart(){
                         return <div key={index} className='attributeItem'>
                             <label className='attributeLabel'>{item.label}</label>
                             <div className='attributeItemValue'>
-                                <InputComponent {...item} onChange={changeComAttribute(item.value)} />
+                                <InputComponent selectNode={selectNode} {...item} onChange={changeComAttribute(item.value)} />
                             </div>
                         </div>
                     })
@@ -32,8 +40,9 @@ export default function rightPart(){
             if (typeof e === 'object') {
                 attribute = e.target.value;
             }
-            window.renderCom[value] = attribute;
-            window.setComList([...window.comList])
+            // 通过Store的dispatch更改组件属性
+            selectNode[value] = attribute;
+            Store.dispatch({type: 'changeComList', value:comList})
         }
     }
     const items: TabsProps['items'] = [

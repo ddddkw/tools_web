@@ -1,0 +1,31 @@
+.mapList {
+    display: flex;
+    flex-wrap: wrap;
+    height: 400px;
+    overflow: auto;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;     /* Firefox */
+    overflow: -moz-scrollbars-none; /* Older Firefox versions */
+    overflow-y: scroll;        /* Ensure content is scrollable */
+}
+.iconItem {
+    width:51px;
+    height: 51px;
+    font-size: 18px;
+    display: inline-block;
+    text-align: center;
+    line-height: 51px;
+}
+.iconItem:hover {
+    background-color: rgb(235, 232, 232);
+}
+.activeIcon {
+    width:51px;
+    height: 51px;
+    font-size: 18px;
+    display: inline-block;
+    text-align: center;
+    line-height: 51px;
+    background-color: rgb(235, 232, 232);
+}
+

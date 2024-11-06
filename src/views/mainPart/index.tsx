@@ -26,6 +26,7 @@ export default function mainPart(){
     subscribeHook()
     const onDrop = (e: any) => {
         // 鼠标的结束位置
+        // eslint-disable-next-line no-debugger
         distance.current.endLeft = e.clientX;
         distance.current.endTop = e.clientY;
         // 新加的代码。给对应的组件加上style
@@ -42,6 +43,7 @@ export default function mainPart(){
             }
             // 切记，拖拽完组件要记得清空这个id
             setDragComId('')
+            Store.dispatch({type: 'changeSelectCom', value: dragComId});
         }else{
             style = {
                 position: 'absolute',
@@ -56,7 +58,7 @@ export default function mainPart(){
             }
             comList.push(comNode)
             // 更新Store，从而更新画布区
-            Store.dispatch({type: 'changeComList', value: comList})
+            Store.dispatch({type: 'changeSelectCom', value: comNode.comId})
             setSelectId(comId)
         }
         // 更新Store，从而更新画布区
@@ -85,6 +87,8 @@ export default function mainPart(){
         return () => {
             // 点击事件设置选中节点的ID
             setSelectId(com.comId)
+            // 更新当前选中的节点
+            Store.dispatch({type: 'changeSelectCom', value: com.comId});
         }
     }
     return (
