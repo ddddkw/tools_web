@@ -2,13 +2,14 @@ import { Modal } from 'antd'
 import iconList from './iconMap.json'
 import './index.css'
 import {useEffect, useState} from "react";
+import { getComById } from "../../utils/nodeUtils";
 import Store from "../../store";
 export default function IconSelect(props: any) {
     const { openModal, setOpenModal } = props;
     const [selectItem, setSelectItem] =useState<string>()
     const comList = JSON.parse(JSON.stringify(Store.getState().comList))
     const selectCom = Store.getState().selectCom
-    const selectNode = comList.find((item: any) => item.comId === selectCom)
+    const selectNode = getComById(selectCom,comList)
     useEffect(() => {
         setSelectItem(selectNode.type)
     },[openModal])

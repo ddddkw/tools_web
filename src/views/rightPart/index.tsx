@@ -6,12 +6,14 @@ import InputComponent from './staticComponents/inputComponent'
 import Store from "../../store";
 import {useState} from "react";
 import {subscribeHook} from "../../store/subscribe";
+import {getComById} from '../../utils/nodeUtils'
 export default function rightPart(){
     // 将subscribeHook放在最上面的原因是，需要确保在访问store redux中的状态之前已经成功的订阅了store的变化
     subscribeHook()
     const comList = JSON.parse(JSON.stringify(Store.getState().comList))
     const selectCom = Store.getState().selectCom
-    const selectNode = comList.find((item: any) => item.comId === selectCom)
+    const selectNode = getComById(selectCom,comList)
+    // eslint-disable-next-line no-debugger
     const getAttributePanel = () => {
         // 获取组件类型
         const comType = selectNode?.comType;

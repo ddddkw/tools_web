@@ -1,5 +1,10 @@
 const inputAttributes =[
     {
+        label: '标签',
+        value: 'label',
+        type: 'input'
+    },
+    {
         label: '前置标签',
         value: 'addonBefore',
         type: 'input'

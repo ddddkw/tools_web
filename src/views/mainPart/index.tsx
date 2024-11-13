@@ -2,12 +2,14 @@ import './index.css'
 import {useRef, useState} from "react";
 import * as components from '../leftPart/components/exportAll'
 import Store from "../../store";
+import {getComById} from '../../utils/nodeUtils'
 import {subscribeHook} from "../../store/subscribe";
 export default function mainPart(){
     interface ComJson {
         comType: string,
         style?: any,
         comId: string,
+        childList?: ComJson[] // 如果当前组件内有子组件的话，使用childList进行渲染
     }
     // 拿到当前拖拽的节点类型
     const nowCom = Store.getState().dragCom
@@ -35,7 +37,8 @@ export default function mainPart(){
         let style:any;
         const comId = `comId_${Date.now()}`
         if(dragComId) {
-            const node = comList.find((item:ComJson) => item.comId === dragComId)
+            const node = getComById(dragComId,comList)
+            console.log(node,'node')
             node.style = {
                 ...node.style,
                 left: parseInt(node.style.left) + (e.clientX - (distance.current.startLeft || 0)) + 'px',
@@ -54,7 +57,7 @@ export default function mainPart(){
             const comNode = {
                 comType: nowCom,
                 style,
-                comId
+                comId,
             }
             comList.push(comNode)
             // 更新Store，从而更新画布区
@@ -73,10 +76,11 @@ export default function mainPart(){
         e.preventDefault()
     }
 
-    // 画布区的组件拖拽方法
+    // 画布区的组件开始拖拽时的方法
     const onDragStart = (com: ComJson) => {
         return (e:any) => {
             // 在移动区内进行移动时，记录下移动的结点的唯一标识
+            // 拖拽form表单内的组件时，由于是需要整个form表单进行移动，所以不可以组织时间冒泡，要使拖拽的comId是form的comId
             setDragComId(com.comId);
             // 开始位置
             distance.current.startLeft = e.clientX;
@@ -84,26 +88,81 @@ export default function mainPart(){
         }
     }
     const selectCom = (com: ComJson) => {
-        return () => {
+        return (e:any) => {
             // 点击事件设置选中节点的ID
             setSelectId(com.comId)
             // 更新当前选中的节点
             Store.dispatch({type: 'changeSelectCom', value: com.comId});
+            e.stopPropagation()
         }
     }
+    // form内部的组件进行拖拽结束时且拖拽后的最终位置依旧是在form表单内时的回调方法
+    const onDropContainer = (com:ComJson)=> {
+        return ((e:any)=>{
+            // 获取当前拖拽的元素
+            const dragCom = getComById(dragComId, comList)
+            // 如果拖拽的元素是form表单的话
+            if(com.comType === 'Form') {
+                // 如果在Form表单内拖拽且拖拽的不是form表单，只有在非第一次拖拽进入时会调用该条件内的方法
+                if(dragCom && dragCom !== com) {
+                    const index = comList.findIndex((item: any) => item.comId === dragCom?.comId);
+                    if(index > -1) {
+                        comList.splice(index, 1)
+                    }
+                    if(!com.childList) {
+                        com.childList = []
+                    }
+                    delete dragCom.style
+                    // 将拖拽进来push到form表单内当做item进行渲染
+                    com.childList.push(dragCom);
+                    Store.dispatch({type: 'changeComList', value: comList})
+                    // 阻止冒泡事件
+                    e.stopPropagation()
+                    setDragComId('')
+                    return;
+                }else if(dragCom){
+                    return;
+                }
+                const comId = `comId_${Date.now()}`
+                const comNode = {
+                    comType: nowCom,
+                    comId
+                }
+                if(!com.childList) {
+                    com.childList = []
+                }
+                com.childList.push(comNode);
+                Store.dispatch({type: 'changeComList', value: comList})
+                e.stopPropagation()
+            }
+        })
+    }
+    const getComponents = (com:ComJson)=> {
+        const Com = components[com.comType as keyof typeof components];
+        return (
+            // 在form表单内再添加一层拖拽事件，主要作用是用于处理在form表单内部拖拽组件
+            <div onDrop={onDropContainer(com)} key={com.comId} onClick={selectCom(com)}>
+                <div draggable onDragStart={onDragStart(com)}>
+                    <div className={com.comId==selectId?'selectCom':''} style={com.style} >
+                        <Com {...com}>
+                            {
+                                com.childList&&com.childList.map((item:ComJson)=>{
+                                    return getComponents(item)
+                                })
+                            }
+                        </Com>
+                    </div>
+                </div>
+            </div>
+        )
+    }
     return (
+        // onDrop是被拖入的父级元素的回调事件
         <div onDrop={onDrop} onDragOver={onDragOver} onDragEnter={onDragEnter} className='mainPart'>
             {
                 comList.map((com:ComJson) => {
-                    const Com = components[com.comType as keyof typeof components];
-                    // 新加的代码，将style传递给组件
-                    return (
-                        <div onClick={selectCom(com)} key={com.comId} draggable onDragStart={onDragStart(com)}>
-                            <div className={com.comId==selectId?'selectCom':''} style={com.style} >
-                                <Com {...com}/>
-                            </div>
-                        </div>
-                        )
+                    // 获取所有已拖拽的子组件并将其渲染到画布上
+                    return getComponents(com)
                 })
             }
         </div>

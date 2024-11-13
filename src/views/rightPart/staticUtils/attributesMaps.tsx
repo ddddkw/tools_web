@@ -4,6 +4,7 @@ import {inputAttributes} from "./components/inputAttributes";
 import {checkBoxAttribute} from "./components/checkBoxAttributes";
 import {radioAttribute} from "./components/radioAttributes";
 import {rateAttributes} from "./components/rateAttributes";
+import {formAttribute} from "./components/formAttributes";
 
 interface AttributeMap {
     [key: string]: ComAttribute[]
@@ -22,7 +23,8 @@ const attributeMap: AttributeMap = {
     Input:inputAttributes,
     Checkbox:checkBoxAttribute,
     Radio:radioAttribute,
-    Rate:rateAttributes
+    Rate:rateAttributes,
+    Form:formAttribute
 }
 export {
     attributeMap
