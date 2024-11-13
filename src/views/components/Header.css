@@ -3,6 +3,10 @@
     line-height: 80px;
     box-shadow: 0 0 1px 1px rgb(209, 203, 203);
 }
+.headerTitle {
+    font-size: 30px;
+    font-weight: bold;
+}
 .buttonBody {
     float: right;
     display: flex;

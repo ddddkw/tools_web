@@ -15,6 +15,8 @@ export default function rightPart(){
     const getAttributePanel = () => {
         // 获取组件类型
         const comType = selectNode?.comType;
+        console.log(comType,'comType')
+        console.log(attributeMap,'attributeMap')
         // 拿到组件对应的属性列表
         const comAttributeList = attributeMap[comType] || []
         console.log(comAttributeList,'comAttributeList')

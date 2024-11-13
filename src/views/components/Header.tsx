@@ -7,7 +7,7 @@ export default function Header(){
     }
     return (
         <div className={'HeaderContainer'}>
-            Dbulider
+            <span className={'headerTitle'}>Dbulider</span>
             <div className={"buttonBody"}>
                 <Button className={"buttonItem"} type="primary">
                     Click Me

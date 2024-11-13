@@ -13,11 +13,11 @@
 .componentGroup {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
 }
 .componentItem{
     width: 70px;
     height: 40px;
+    margin: 10px 8px;
     line-height: 40px;
     border: 1px solid rgb(187, 181, 181);
     border-radius: 4px;
