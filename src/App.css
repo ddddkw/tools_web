@@ -6,7 +6,10 @@
   height: 40vmin;
   pointer-events: none;
 }
-
+/* 隐藏整个页面的滚动条 */
+::-webkit-scrollbar {
+  display: none; /* WebKit browsers (Chrome, Safari, Edge) */
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

@@ -1,5 +1,6 @@
 import { buttonStyle } from "./comStyle/buttonStyle"
 import {cardStyle} from "./comStyle/cardStyle";
+import {floatButtonStyle} from "./comStyle/floatButtonStyle";
 
 interface StyleMap {
     [key: string]: Style[]
@@ -16,7 +17,8 @@ export interface Style {
 
 const styleMap: StyleMap = {
     Button: buttonStyle,
-    Card: cardStyle
+    Card: cardStyle,
+    FloatButton:floatButtonStyle
 }
 
 export {

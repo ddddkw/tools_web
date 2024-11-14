@@ -21,7 +21,6 @@ export default function leftPart(){
     }
     const renderComponent = (comTypeList: string[]) => {
         const list = Object.keys(components).filter(item => comTypeList.includes(item))
-        console.log(list,'list-------------')
         return <div className="componentGroup">
             {
                 list.map(name => {
@@ -117,7 +116,7 @@ export default function leftPart(){
         {
             key: 'component',
             label: <div style={{fontSize:'18px',width:'150px',textAlign:'center'}}>组件</div>,
-            children: <Collapse className='comCollapse' ghost items={collapseItems} defaultActiveKey={'enterDataCom'}/>,
+            children: <div className={'comBody'}><Collapse ghost items={collapseItems} defaultActiveKey={'enterDataCom'}/></div>,
         },
         {
             key: 'data',

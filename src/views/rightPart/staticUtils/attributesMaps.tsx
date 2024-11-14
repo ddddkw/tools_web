@@ -6,6 +6,11 @@ import {radioAttribute} from "./comAttributes/radioAttributes";
 import {rateAttributes} from "./comAttributes/rateAttributes";
 import {formAttribute} from "./comAttributes/formAttributes";
 import {cardAttribute} from "./comAttributes/cardAttributes";
+import {floatButtonAttribute} from "./comAttributes/floatButtonAttributes";
+import {alertAttribute} from "./comAttributes/alertAttributes";
+import {progressAttribute} from "./comAttributes/progressAttributes";
+import {qrcodeAttribute} from "./comAttributes/qrCodeAttributes";
+import {tagAttribute} from "./comAttributes/tagAttributes";
 
 interface AttributeMap {
     [key: string]: ComAttribute[]
@@ -26,7 +31,12 @@ const attributeMap: AttributeMap = {
     Radio:radioAttribute,
     Rate:rateAttributes,
     Form:formAttribute,
-    Card:cardAttribute
+    Card:cardAttribute,
+    FloatButton:floatButtonAttribute,
+    Alert: alertAttribute,
+    Progress:progressAttribute,
+    QRCode: qrcodeAttribute,
+    Tag: tagAttribute
 }
 export {
     attributeMap

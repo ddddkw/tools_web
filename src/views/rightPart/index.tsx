@@ -40,7 +40,7 @@ export default function rightPart(){
         return (e: any) => {
             let attribute = e;
             if(typeof e === 'object') {
-                if(['color', 'backgroundColor','borderColor'].includes(value)) {
+                if(['color', 'backgroundColor','borderColor','strokeColor','bgColor'].includes(value)) {
                     // 将其转化为十六进制表示法
                     attribute = e.toHexString()
                 }else{
@@ -85,7 +85,12 @@ export default function rightPart(){
         return (e: any) => {
             let attribute = e
             if (typeof e === 'object') {
-                attribute = e.target.value;
+                if(['color', 'backgroundColor','borderColor','strokeColor','bgColor'].includes(value)) {
+                    // 将其转化为十六进制表示法
+                    attribute = e.toHexString()
+                }else{
+                    attribute = e.target.value;
+                }
             }
             // 通过Store的dispatch更改组件属性
             selectNode[value] = attribute;

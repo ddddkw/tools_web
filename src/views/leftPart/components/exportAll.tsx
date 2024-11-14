@@ -1,11 +1,16 @@
-import Button from './button/index'
-import Input from './input/index'
-import Icon from './icon/index'
-import Checkbox from './checkBox/index'
-import Radio from './radio/index'
-import Rate from './rate/index'
-import {Form} from "./form/index";
-import {Card} from "./card/index";
+import Button from './currenterCom/button/index'
+import Input from './enterDataCom/input/index'
+import Icon from './currenterCom/icon/index'
+import Checkbox from './enterDataCom/checkBox/index'
+import Radio from './enterDataCom/radio/index'
+import Rate from './enterDataCom/rate/index'
+import {Form} from "./containerCom/form/index";
+import {Card} from "./containerCom/card/index";
+import FloatButton from "./currenterCom/floatButton";
+import Alert from "./feedbackCom/alert";
+import Progress from "./feedbackCom/progress/index";
+import QRCode from "./showDataCom/qrCode";
+import Tag from './showDataCom/tag/index'
 export {
     Button,
     Input,
@@ -14,5 +19,10 @@ export {
     Radio,
     Rate,
     Form,
-    Card
+    Card,
+    FloatButton,
+    Alert,
+    Progress,
+    QRCode,
+    Tag
 }
