@@ -2,6 +2,7 @@ import './index.css'
 import {Tabs} from 'antd';
 import type { TabsProps } from 'antd';
 import {attributeMap} from "./staticUtils/attributesMaps";
+import {styleMap} from "./staticUtils/styleMaps";
 import InputComponent from './staticComponents/inputComponent'
 import Store from "../../store";
 import {useState} from "react";
@@ -17,11 +18,8 @@ export default function rightPart(){
     const getAttributePanel = () => {
         // 获取组件类型
         const comType = selectNode?.comType;
-        console.log(comType,'comType')
-        console.log(attributeMap,'attributeMap')
         // 拿到组件对应的属性列表
         const comAttributeList = attributeMap[comType] || []
-        console.log(comAttributeList,'comAttributeList')
         return (
             <div>
                 {
@@ -30,6 +28,51 @@ export default function rightPart(){
                             <label className='attributeLabel'>{item.label}</label>
                             <div className='attributeItemValue'>
                                 <InputComponent selectNode={selectNode} {...item} onChange={changeComAttribute(item.value)} />
+                            </div>
+                        </div>
+                    })
+                }
+            </div>
+        )
+    }
+    const changeComStyle=(value: string)=>{
+        // 从事件中获取到输入的目标值
+        return (e: any) => {
+            let attribute = e;
+            if(typeof e === 'object') {
+                if(['color', 'backgroundColor','borderColor'].includes(value)) {
+                    // 将其转化为十六进制表示法
+                    attribute = e.toHexString()
+                }else{
+                    attribute = e.target.value;
+                }
+            }
+            if(['width', 'height','borderWidth'].includes(value)) {
+                attribute += 'px'
+            }
+            if(selectNode) {
+                if(!selectNode.comStyle) {
+                    selectNode.comStyle = {}
+                }
+                selectNode.comStyle[value] = attribute;
+            }
+            Store.dispatch({type: 'changeComList', value:comList})
+        }
+    }
+    const getStylePanel = ()=>{
+        // 获取组件类型
+        const comType = selectNode?.comType;
+        // 拿到组件对应的样式列表
+        const styleList = styleMap[comType] || []
+        return (
+            <div>
+                {
+                    // map是对数组中的每个元素应用一个函数
+                    styleList.map((item,index) => {
+                        return <div key={index} className='attributeItem'>
+                            <label className='attributeLabel'>{item.label}</label>
+                            <div className='attributeItemValue'>
+                                <InputComponent selectNode={selectNode} {...item} onChange={changeComStyle(item.value)}/>
                             </div>
                         </div>
                     })
@@ -58,7 +101,7 @@ export default function rightPart(){
         {
             key: 'stylePanel',
             label: <div style={{fontSize:'18px',width:'150px',textAlign:'center'}}>样式</div>,
-            children: 'Content of Tab Pane 2',
+            children: getStylePanel(),
         }
     ];
     const [update, setUpdate] = useState({})

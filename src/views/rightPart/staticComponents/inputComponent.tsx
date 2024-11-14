@@ -1,4 +1,4 @@
-import { Input, Switch, Select, Button} from "antd"
+import {Input, Switch, Select, Button, ColorPicker} from "antd"
 import {useState} from "react";
 
 export default function InputComponent(props: any) {
@@ -19,10 +19,13 @@ export default function InputComponent(props: any) {
                 return <Select value={selectNode[value]||defaultValue} style={{width:'120px'}}  options={options} defaultValue={defaultValue} onChange={onChange}></Select>
             }
             case 'number': {
-                return <Input type="number" value={selectNode[value] || ''} style={{width:'120px'}} defaultValue={defaultValue} onChange = {onChange}/>
+                return <Input type="number" value={selectNode[value] || parseInt(selectNode?.comStyle?.[value] || '') || '0'} style={{width:'120px'}} defaultValue={defaultValue} onChange={onChange}/>
             }
             case 'modal': {
                 return <Button onClick={showModal} >{label}</Button>
+            }
+            case 'color': {
+                return  <ColorPicker allowClear showText mode={['single', 'gradient']} onChangeComplete={onChange}/>
             }
         }
     }

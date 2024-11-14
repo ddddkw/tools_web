@@ -1,10 +1,10 @@
-import { buttonAttribute } from './components/buttonAttributes'
-import { iconAttribute } from './components/iconAttributes'
-import {inputAttributes} from "./components/inputAttributes";
-import {checkBoxAttribute} from "./components/checkBoxAttributes";
-import {radioAttribute} from "./components/radioAttributes";
-import {rateAttributes} from "./components/rateAttributes";
-import {formAttribute} from "./components/formAttributes";
+import { buttonAttribute } from './comAttributes/buttonAttributes'
+import { iconAttribute } from './comAttributes/iconAttributes'
+import {inputAttributes} from "./comAttributes/inputAttributes";
+import {checkBoxAttribute} from "./comAttributes/checkBoxAttributes";
+import {radioAttribute} from "./comAttributes/radioAttributes";
+import {rateAttributes} from "./comAttributes/rateAttributes";
+import {formAttribute} from "./comAttributes/formAttributes";
 
 interface AttributeMap {
     [key: string]: ComAttribute[]

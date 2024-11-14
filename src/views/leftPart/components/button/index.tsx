@@ -1,9 +1,10 @@
 import {Button as AntButton} from 'antd'
 export default function Button(props: any) {
-    const { caption, danger, disabled, ghost, shape, size} = props
+    const { caption, danger, disabled, ghost, comStyle, shape, size} = props
     return (
         <div>
             <AntButton
+                style={{...comStyle}}
                 danger={danger}
                 disabled={disabled}
                 ghost={ghost}
