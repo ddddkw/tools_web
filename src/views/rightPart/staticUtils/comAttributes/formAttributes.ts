@@ -1,13 +1,13 @@
 const formAttribute = [
     {
-        label: '设置表单组件禁用',
-        value: 'disabled',
-        type: 'switch'
-    },
-    {
         label: '设置组件标题',
         value: 'caption',
         type: 'input'
+    },
+    {
+        label: '设置表单组件禁用',
+        value: 'disabled',
+        type: 'switch'
     },
     {
         label: '文本对齐方式',

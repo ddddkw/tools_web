@@ -1,5 +1,10 @@
 const checkBoxAttribute = [
     {
+        label: '设置组件标题',
+        value: 'caption',
+        type: 'input'
+    },
+    {
         label: '是否禁用',
         value: 'disabled',
         type: 'switch'

@@ -1,5 +1,10 @@
 const inputAttributes =[
     {
+        label: '组件标题',
+        value: 'caption',
+        type: 'input'
+    },
+    {
         label: '标签',
         value: 'label',
         type: 'input'

@@ -1,13 +1,16 @@
 import './index.css'
-import {Collapse, FloatButton, Tabs} from 'antd';
+import {Collapse, Dropdown, FloatButton, Tabs, Tree} from 'antd';
 import type { TabsProps } from 'antd';
 import * as components from './components/exportAll'
 import Store from "../../store";
 import componentTextMap from './staticUtils/itemList'
 import { LeftCircleTwoTone, RightCircleTwoTone } from '@ant-design/icons';
-import {useState} from "react";
+import EditJson from '../../modal/editJson/index'
+import {useEffect, useState} from "react";
 import type { CollapseProps } from 'antd';
+import {subscribeHook} from "../../store/subscribe";
 export default function leftPart(){
+    subscribeHook()
     const [showVisible,setShowVisible] = useState(false)
     // 直接将数据挂到window上
     const onDragStart = (name: string) => {
@@ -31,7 +34,55 @@ export default function leftPart(){
                 })
             }
         </div>
-
+    }
+    const [showJson, setShowJson] = useState(false)
+    const [jsonComId, setJsonComId] = useState('')
+    const menuOnClick = (comId: string) =>{
+        return (menuItem: any) => {
+            if(menuItem.key === 'showJson'){
+                // 展示协议的弹窗
+                setShowJson(true)
+                setJsonComId(comId)
+            }
+        }
+    }
+    const dropItems = [
+        {
+            label: '查看JSON',
+            key: 'showJson'
+        }
+    ]
+    // 数据部分下展示页面
+    const getTreeList = () => {
+        const comList = Store.getState().comList;
+        const toTreeData = (arr: []) => {
+            return arr.map((item: any) => {
+                const node: any = {
+                    // 修改节点的title，使其可以通过右键点击触发下拉菜单
+                    title: <div>
+                        <Dropdown menu={{onClick: menuOnClick(item.comId), items: dropItems }} trigger={['contextMenu']}>
+                            <span>{item.caption}</span>
+                        </Dropdown>
+                    </div>,
+                    key: item.comId,
+                }
+                if(item.childList) {
+                    node.children = toTreeData(item.childList)
+                }
+                return node
+            })
+        }
+        const treeData = [{
+            title: '组件协议',
+            key: 'protocol',
+            children: toTreeData(comList)
+        }]
+        console.log(treeData,'treeData-----')
+        return <Tree
+            className='leftList'
+            showLine={true}
+            treeData={treeData}
+        />
     }
     // 每个折叠面板下，根据不同的组件列表类型，展示不同的组件
     const collapseItems: CollapseProps['items'] = [
@@ -71,7 +122,7 @@ export default function leftPart(){
         {
             key: 'data',
             label: <div style={{fontSize:'18px',width:'150px',textAlign:'center'}}>数据</div>,
-            children: 'Content of Tab Pane 2',
+            children: getTreeList(),
         }
     ];
     const onChange = () => {
@@ -82,6 +133,7 @@ export default function leftPart(){
     }
     return (
         <div className={showVisible?"leftContainer":'noLeftContainer'}>
+            <EditJson jsonComId={jsonComId} setShowJson={setShowJson} showJson={showJson}></EditJson>
             {showVisible?<Tabs defaultActiveKey="1" items={items} onChange={onChange} />:''}
             {showVisible?<LeftCircleTwoTone onClick={()=>{changeVisible()}} className={'flag'}/>:<RightCircleTwoTone onClick={()=>{changeVisible()}} className={'flag'}/>}
         </div>

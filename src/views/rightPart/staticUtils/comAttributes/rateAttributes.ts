@@ -1,5 +1,10 @@
 const rateAttributes=[
     {
+        label: '组件标题',
+        value: 'caption',
+        type: 'input'
+    },
+    {
         label: '再次点击后清除',
         value: 'allowClear',
         type: 'switch'

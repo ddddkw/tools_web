@@ -1,5 +1,10 @@
 const radioAttribute = [
     {
+        label: '组件标题',
+        value: 'caption',
+        type: 'input'
+    },
+    {
         label: '是否禁用',
         value: 'disabled',
         type: 'switch'

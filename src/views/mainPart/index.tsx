@@ -1,10 +1,12 @@
 import './index.css'
 import {useRef, useState} from "react";
 import * as components from '../leftPart/components/exportAll'
+import componentTextMap  from '../leftPart/staticUtils/itemList'
 import Store from "../../store";
 import {getComById} from '../../utils/nodeUtils'
 import {subscribeHook} from "../../store/subscribe";
 export default function mainPart(){
+    let num = 1;
     interface ComJson {
         comType: string,
         style?: any,
@@ -58,6 +60,7 @@ export default function mainPart(){
                 comType: nowCom,
                 style,
                 comId,
+                caption: componentTextMap[nowCom] + num++
             }
             comList.push(comNode)
             // 更新Store，从而更新画布区
@@ -126,7 +129,8 @@ export default function mainPart(){
                 const comId = `comId_${Date.now()}`
                 const comNode = {
                     comType: nowCom,
-                    comId
+                    comId,
+                    caption: componentTextMap[nowCom] + num++
                 }
                 if(!com.childList) {
                     com.childList = []

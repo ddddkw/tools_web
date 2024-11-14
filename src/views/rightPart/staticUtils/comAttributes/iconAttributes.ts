@@ -1,5 +1,10 @@
 const iconAttribute = [
     {
+        label: '组件标题',
+        value: 'caption',
+        type: 'input'
+    },
+    {
         label: '旋转角度',
         value: 'rotate',
         type: 'number'

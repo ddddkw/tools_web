@@ -5,7 +5,7 @@ export default function Checkbox(props:any){
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     return(
         <div>
-            <AntCheckbox disabled={disabled} checked={checked} autoFocus={autoFocus} defaultChecked={defaultChecked} indeterminate={indeterminate}>{label||'复选框'}</AntCheckbox>
+            <AntCheckbox disabled={disabled} checked={checked} autoFocus={autoFocus} defaultChecked={defaultChecked} indeterminate={indeterminate}>{label||'多选框'}</AntCheckbox>
         </div>
     )
 }

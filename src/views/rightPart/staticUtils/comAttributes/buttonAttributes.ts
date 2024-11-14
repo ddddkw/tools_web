@@ -1,5 +1,10 @@
 const buttonAttribute = [
     {
+        label: '设置组件标题',
+        value: 'caption',
+        type: 'input'
+    },
+    {
         label: '设置按钮文字',
         value: 'caption',
         type: 'input'
