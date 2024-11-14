@@ -5,6 +5,7 @@ import Checkbox from './checkBox/index'
 import Radio from './radio/index'
 import Rate from './rate/index'
 import {Form} from "./form/index";
+import {Card} from "./card/index";
 export {
     Button,
     Input,
@@ -12,5 +13,6 @@ export {
     Checkbox,
     Radio,
     Rate,
-    Form
+    Form,
+    Card
 }

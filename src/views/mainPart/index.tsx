@@ -102,7 +102,7 @@ export default function mainPart(){
             // 获取当前拖拽的元素
             const dragCom = getComById(dragComId, comList)
             // 如果拖拽的元素是form表单的话
-            if(com.comType === 'Form') {
+            if(['Form','Card'].includes(com.comType)) {
                 // 如果在Form表单内拖拽且拖拽的不是form表单，只有在非第一次拖拽进入时会调用该条件内的方法
                 if(dragCom && dragCom !== com) {
                     const index = comList.findIndex((item: any) => item.comId === dragCom?.comId);
