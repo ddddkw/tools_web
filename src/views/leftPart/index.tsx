@@ -116,7 +116,7 @@ export default function leftPart(){
         {
             key: 'component',
             label: <div style={{fontSize:'18px',width:'150px',textAlign:'center'}}>组件</div>,
-            children: <div className={'comBody'}><Collapse ghost items={collapseItems} defaultActiveKey={'enterDataCom'}/></div>,
+            children: <div className={'comBody'}><Collapse ghost accordion={true} items={collapseItems} defaultActiveKey={'enterDataCom'}/></div>,
         },
         {
             key: 'data',

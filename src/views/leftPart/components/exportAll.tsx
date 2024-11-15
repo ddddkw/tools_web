@@ -11,6 +11,7 @@ import Alert from "./feedbackCom/alert";
 import Progress from "./feedbackCom/progress/index";
 import QRCode from "./showDataCom/qrCode";
 import Tag from './showDataCom/tag/index'
+import Avatar from "./showDataCom/avatar";
 export {
     Button,
     Input,
@@ -24,5 +25,6 @@ export {
     Alert,
     Progress,
     QRCode,
-    Tag
+    Tag,
+    Avatar
 }

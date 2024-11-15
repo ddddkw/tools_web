@@ -5,16 +5,22 @@ import {useEffect, useState} from "react";
 import { getComById } from "../../utils/nodeUtils";
 import Store from "../../store";
 export default function IconSelect(props: any) {
-    const { openModal, setOpenModal } = props;
+    const { openModal, setOpenModal, valueKey } = props;
     const [selectItem, setSelectItem] =useState<string>()
     const comList = JSON.parse(JSON.stringify(Store.getState().comList))
     const selectCom = Store.getState().selectCom
     const selectNode = getComById(selectCom,comList)
     useEffect(() => {
-        setSelectItem(selectNode.type)
+        if(selectNode) {
+            // 这里该node的valueKey
+            setSelectItem(selectNode[valueKey as keyof typeof selectNode])
+        }
     },[openModal])
     const handleOk = () => {
-        selectNode.type = selectItem
+        if(selectNode) {
+            selectNode[valueKey as keyof typeof selectNode] = selectItem;
+        }
+        // selectNode.type = selectItem
         Store.dispatch({type:'changeComList',value:comList})
         setSelectItem('')
         setOpenModal(false)
