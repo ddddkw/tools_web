@@ -7,13 +7,13 @@ export default function Header(){
     }
     return (
         <div className={'HeaderContainer'}>
-            <span className={'headerTitle'}>Dbulider</span>
+            <span className={'headerTitle'}>DD_builder</span>
             <div className={"buttonBody"}>
                 <Button className={"buttonItem"} type="primary">
-                    Click Me
+                    刷新
                 </Button>
                 <Button className={"buttonItem"} type="primary">
-                    Click Me
+                    保存
                 </Button>
                 <img onClick={toGitHub} className={'gitHubIcon'} src={gitHub}></img>
             </div>

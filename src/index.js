@@ -1,4 +1,3 @@
-// index.tsx
 import "./publicPath";//导入上一步配置的文件，用于正确加载静态资源文件
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -32,6 +31,7 @@ export async function unmount(props) {
             : document.querySelector("#root")
     );
 }
+// 非qiankun环境下
 if (!window.__POWERED_BY_QIANKUN__) {
     const rootElement = document.getElementById('root');
     if (!rootElement) {
@@ -40,8 +40,9 @@ if (!window.__POWERED_BY_QIANKUN__) {
 
     const root = createRoot(rootElement);
     root.render(
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>)
+        // <BrowserRouter>
+        <App />
+        // </BrowserRouter>)
+    )
 }
 reportWebVitals();

@@ -28,4 +28,7 @@ module.exports = {
     plugins: [
         '@typescript-eslint', // TypeScript 插件（如果适用）
     ],
+    rules: {
+        "no-global-assign": ["error", { "exceptions": ["__webpack_public_path__"] }]
+    }
 };
