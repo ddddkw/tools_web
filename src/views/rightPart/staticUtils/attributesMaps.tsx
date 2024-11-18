@@ -12,6 +12,7 @@ import {progressAttribute} from "./comAttributes/progressAttributes";
 import {qrcodeAttribute} from "./comAttributes/qrCodeAttributes";
 import {tagAttribute} from "./comAttributes/tagAttributes";
 import {avatarAttribute} from "./comAttributes/avatarAttributes";
+import {carouselAttribute} from "./comAttributes/carouselAttributes";
 
 interface AttributeMap {
     [key: string]: ComAttribute[]
@@ -38,7 +39,8 @@ const attributeMap: AttributeMap = {
     Progress:progressAttribute,
     QRCode: qrcodeAttribute,
     Tag: tagAttribute,
-    Avatar: avatarAttribute
+    Avatar: avatarAttribute,
+    Carousel: carouselAttribute
 }
 export {
     attributeMap

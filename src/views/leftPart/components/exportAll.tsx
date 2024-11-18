@@ -12,6 +12,7 @@ import Progress from "./feedbackCom/progress/index";
 import QRCode from "./showDataCom/qrCode";
 import Tag from './showDataCom/tag/index'
 import Avatar from "./showDataCom/avatar";
+import Carousel from "./containerCom/carousel";
 export {
     Button,
     Input,
@@ -26,5 +27,6 @@ export {
     Progress,
     QRCode,
     Tag,
-    Avatar
+    Avatar,
+    Carousel
 }

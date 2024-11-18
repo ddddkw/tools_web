@@ -5,14 +5,15 @@ import componentTextMap  from '../leftPart/staticUtils/itemList'
 import Store from "../../store";
 import {getComById} from '../../utils/nodeUtils'
 import {subscribeHook} from "../../store/subscribe";
+import { includesList, leftDropContainer, mainDropContainer } from './staticUtils/includes'
+export interface ComJson {
+    comType: string,
+    style?: any,
+    comId: string,
+    childList?: ComJson[] // 如果当前组件内有子组件的话，使用childList进行渲染
+}
 export default function mainPart(){
     let num = 1;
-    interface ComJson {
-        comType: string,
-        style?: any,
-        comId: string,
-        childList?: ComJson[] // 如果当前组件内有子组件的话，使用childList进行渲染
-    }
     // 拿到当前拖拽的节点类型
     const nowCom = Store.getState().dragCom
     const comList = JSON.parse(JSON.stringify(Store.getState().comList))
@@ -100,46 +101,64 @@ export default function mainPart(){
         }
     }
     // form内部的组件进行拖拽结束时且拖拽后的最终位置依旧是在form表单内时的回调方法
-    const onDropContainer = (com:ComJson)=> {
-        return ((e:any)=>{
-            // 获取当前拖拽的元素
+    // const onDropContainer = (com:ComJson)=> {
+    //     return ((e:any)=>{
+    //         // 获取当前拖拽的元素
+    //         const dragCom = getComById(dragComId, comList)
+    //         // 如果拖拽的元素是form表单的话
+    //         if(['Form','Card'].includes(com.comType)) {
+    //             // 如果在Form表单内拖拽且拖拽的不是form表单，只有在非第一次拖拽进入时会调用该条件内的方法
+    //             if(dragCom && dragCom !== com) {
+    //                 const index = comList.findIndex((item: any) => item.comId === dragCom?.comId);
+    //                 if(index > -1) {
+    //                     comList.splice(index, 1)
+    //                 }
+    //                 if(!com.childList) {
+    //                     com.childList = []
+    //                 }
+    //                 delete dragCom.style
+    //                 // 将拖拽进来push到form表单内当做item进行渲染
+    //                 com.childList.push(dragCom);
+    //                 Store.dispatch({type: 'changeComList', value: comList})
+    //                 // 阻止冒泡事件
+    //                 e.stopPropagation()
+    //                 setDragComId('')
+    //                 return;
+    //             }else if(dragCom){
+    //                 return;
+    //             }
+    //             const comId = `comId_${Date.now()}`
+    //             const comNode = {
+    //                 comType: nowCom,
+    //                 comId,
+    //                 caption: componentTextMap[nowCom] + num++
+    //             }
+    //             if(!com.childList) {
+    //                 com.childList = []
+    //             }
+    //             com.childList.push(comNode);
+    //             Store.dispatch({type: 'changeComList', value: comList})
+    //             e.stopPropagation()
+    //         }
+    //     })
+    // }
+    const onDropContainer = (com: ComJson) => {
+        return (e: any) => {
             const dragCom = getComById(dragComId, comList)
-            // 如果拖拽的元素是form表单的话
-            if(['Form','Card'].includes(com.comType)) {
-                // 如果在Form表单内拖拽且拖拽的不是form表单，只有在非第一次拖拽进入时会调用该条件内的方法
+            if(Object.keys(includesList).includes(com.comType)) {
+                // 如果是画布区的拖拽要先将节点从comList中删除掉
                 if(dragCom && dragCom !== com) {
-                    const index = comList.findIndex((item: any) => item.comId === dragCom?.comId);
-                    if(index > -1) {
-                        comList.splice(index, 1)
-                    }
-                    if(!com.childList) {
-                        com.childList = []
-                    }
-                    delete dragCom.style
-                    // 将拖拽进来push到form表单内当做item进行渲染
-                    com.childList.push(dragCom);
-                    Store.dispatch({type: 'changeComList', value: comList})
-                    // 阻止冒泡事件
-                    e.stopPropagation()
+                    mainDropContainer(e, com, dragCom, comList);
                     setDragComId('')
                     return;
                 }else if(dragCom){
+                    // 拖拽的是容器本身
                     return;
                 }
-                const comId = `comId_${Date.now()}`
-                const comNode = {
-                    comType: nowCom,
-                    comId,
-                    caption: componentTextMap[nowCom] + num++
-                }
-                if(!com.childList) {
-                    com.childList = []
-                }
-                com.childList.push(comNode);
-                Store.dispatch({type: 'changeComList', value: comList})
-                e.stopPropagation()
+                // 从左侧列表进行拖拽
+                leftDropContainer(e, com, nowCom, componentTextMap, comList);
             }
-        })
+        }
     }
     const getComponents = (com:ComJson)=> {
         const Com = components[com.comType as keyof typeof components];
