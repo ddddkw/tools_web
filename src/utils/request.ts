@@ -1,10 +1,8 @@
 import { createAlova } from 'alova';
 import adapterFetch from 'alova/fetch';
 import {message} from "antd";
-import { useNavigate } from "react-router-dom";
 
 const headers = {'Content-Type': 'application/json;charset=UTF-8'};
-const navigate = useNavigate()
 const alovaInstance = createAlova({
     // baseURL: '',
 
@@ -25,10 +23,6 @@ const alovaInstance = createAlova({
                     content: json.msg || '请求错误',
                     duration: 2000
                 })
-                // 登录过期重新跳转到登录页
-                if (json.code === 401) {
-                    await navigate('/login')
-                }
                 // 抛出错误或返回reject状态的Promise实例时，此请求将抛出错误
                 throw new Error(json.message);
             }

@@ -7,7 +7,7 @@ export default function Main(){
     return (
         <div className="mainContainer">
             <div>
-                <Header/>
+                <Header  homePage={false}/>
             </div>
             <div className={"bodyContainer"}>
                 <LeftPart></LeftPart>

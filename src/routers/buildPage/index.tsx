@@ -4,10 +4,6 @@ const buildRoutes=[
         path:'/BuildPage',
         element:<BuildPage/>
     },
-    {
-        path:'/',
-        element:<BuildPage/>
-    }
 ]
 export {
     buildRoutes
