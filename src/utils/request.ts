@@ -4,7 +4,7 @@ import {message} from "antd";
 
 const headers = {'Content-Type': 'application/json;charset=UTF-8'};
 const alovaInstance = createAlova({
-    // baseURL: '',
+    baseURL: 'http://192.168.31.193:1023/',
 
     requestAdapter: adapterFetch(),
     // 请求拦截器

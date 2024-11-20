@@ -1,4 +1,4 @@
-import '../pageList/index.css';
+import './index.css';
 import { Divider, Input, Button, Card } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +6,7 @@ import http from '../../../utils/request';
 
 const { Search } = Input;
 
-export default function Main() {
+export function PageList() {
     const navigate = useNavigate();
     let dataList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
