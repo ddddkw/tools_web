@@ -1,6 +1,6 @@
 import './App.css';
 // import Main from './views/index.tsx'
-import {Outlet, RouterProvider} from 'react-router-dom';
+import {Outlet, RouterProvider } from 'react-router-dom';
 import router from "./routers";
 import React from 'react';
 import 'antd/dist/antd';

@@ -19,10 +19,6 @@ const homeRoutes=[
             }
         ]
     },
-    {
-        path:'/',
-        element:<HomePage/>
-    }
 ]
 export {
     homeRoutes

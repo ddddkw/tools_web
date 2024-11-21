@@ -2,11 +2,17 @@ import './index.css'
 import {GetProp, message, Upload, UploadProps, Image, UploadFile} from "antd";
 import {useEffect, useState} from "react";
 import http from '../../../utils/request';
-import {mount} from "../../../index";
+import {blobToBase64Url} from '../../../utils/fileUtils'
+import type { UploadChangeParam } from 'antd/lib/upload';
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 function PlusOutlined() {
     return null;
+}
+interface imageMap{
+    id:any,
+    name:string,
+    image:any
 }
 const getBase64 = (file: FileType): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -20,11 +26,18 @@ export function ImageManage(){
     const [fileList, setFileList] = useState<UploadFile[]>([])
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
-    const [imageList, serImageList] = useState([])
     const queryList = () => {
-        http.get('beans/image/queryImage')
+        http.get('beans/image/queryImage').send(true)
             .then((res: any) => {
-                serImageList(res.data)
+                // 注意此处为什么要使用promise
+                const modalList = res.data.map((item: { image: any; })=>{
+                    return { ...item, thumbUrl:`data:image/jpeg;base64,${item.image}`,preview: `data:image/jpeg;base64,${item.image}` };
+                })
+                console.log(modalList,'modalList')
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                setFileList(modalList);
+                console.log(fileList,'fileList')
             })
             .catch((error: any) => {
                 console.error('Error fetching data:', error);
@@ -32,20 +45,28 @@ export function ImageManage(){
     };
     useEffect(()=>{
         queryList()
-    })
+    }, [])
 
     const handlePreview = async (file: UploadFile) => {
         if (!file.url && !file.preview) {
             file.preview = await getBase64(file.originFileObj as FileType);
         }
-
         setPreviewImage(file.url || (file.preview as string));
         setPreviewOpen(true);
     };
 
-    const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
-        setFileList(newFileList);
-
+    const handleChange = ({ file, fileList, event }: UploadChangeParam<UploadFile<any>>) => {
+        setFileList(fileList)
+        if (file.status==='done') {
+            queryList()
+        }
+    };
+    const removeImage = function (val:any){
+        http.get(`beans/image/deleteImage?id=${val.id}`).send(true)
+            .then(res=>{
+                queryList()
+            })
+    }
     const uploadButton = (
         <button style={{ border: 0, background: 'none' }} type="button">
             <PlusOutlined />
@@ -55,26 +76,29 @@ export function ImageManage(){
 
     return(
         <div className={'imageBody'}>
-            <Upload
-                action="http://localhost:1023/beans/image/upload"
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={handlePreview}
-                onChange={handleChange}
-            >
-                {uploadButton}
-            </Upload>
-            {previewImage && (
-                <Image
-                    wrapperStyle={{ display: 'none' }}
-                    preview={{
-                        visible: previewOpen,
-                        onVisibleChange: (visible) => setPreviewOpen(visible),
-                        afterOpenChange: (visible) => !visible && setPreviewImage(''),
-                    }}
-                    src={previewImage}
-                />
-            )}
+            <div className={'newImages'}>
+                <Upload
+                    action="http://localhost:1023/beans/image/upload"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onPreview={handlePreview}
+                    onChange={handleChange}
+                    onRemove={removeImage}
+                >
+                    {uploadButton}
+                </Upload>
+                {previewImage && (
+                    <Image
+                        wrapperStyle={{ display: 'none' }}
+                        preview={{
+                            visible: previewOpen,
+                            onVisibleChange: (visible) => setPreviewOpen(visible),
+                            afterOpenChange: (visible) => !visible && setPreviewImage(''),
+                        }}
+                        src={previewImage}
+                    />
+                )}
+            </div>
         </div>
     )
 }
