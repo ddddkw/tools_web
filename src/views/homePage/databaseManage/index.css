@@ -1,0 +1,27 @@
+.databaseContainer {
+    width: 85%;
+    height: calc(100vh - 90px);
+    background-color: #e0e5ec;
+}
+.searchItem {
+    padding-left: 20px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+
+}
+.ant-divider-horizontal {
+    margin: 0;
+}
+.databaseBody {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.databaseItem {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: calc(10%/6);
+    width: 18%;
+    height: 180px;
+}
