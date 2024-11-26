@@ -1,4 +1,4 @@
-import './index.css'
+import styles from './index.module.css'
 import {Collapse, Dropdown, FloatButton, Tabs, Tree} from 'antd';
 import type { TabsProps } from 'antd';
 import * as components from './components/exportAll'
@@ -21,12 +21,12 @@ export default function leftPart(){
     }
     const renderComponent = (comTypeList: string[]) => {
         const list = Object.keys(components).filter(item => comTypeList.includes(item))
-        return <div className="componentGroup">
+        return <div className={styles.componentGroup}>
             {
                 list.map(name => {
                     console.log(name)
                     const text = componentTextMap[name]
-                    return <div key={name} className='componentItem'>
+                    return <div key={name} className={styles.componentItem}>
                         {/*定义一个全局变量用于存储当前拖拽的组件的名称*/}
                         <div onDragStart={onDragStart(name)} draggable style={{display: 'inline-block'}}><span>{text}</span></div>
                     </div>
@@ -78,7 +78,7 @@ export default function leftPart(){
         }]
         console.log(treeData,'treeData-----')
         return <Tree
-            className='leftList'
+            className={styles.leftList}
             showLine={true}
             treeData={treeData}
         />
@@ -116,7 +116,7 @@ export default function leftPart(){
         {
             key: 'component',
             label: <div style={{fontSize:'18px',width:'150px',textAlign:'center'}}>组件</div>,
-            children: <div className={'comBody'}><Collapse ghost accordion={true} items={collapseItems} defaultActiveKey={'enterDataCom'}/></div>,
+            children: <div className={styles.comBody}><Collapse ghost accordion={true} items={collapseItems} defaultActiveKey={'enterDataCom'}/></div>,
         },
         {
             key: 'data',
@@ -131,10 +131,10 @@ export default function leftPart(){
         setShowVisible(!showVisible)
     }
     return (
-        <div className={showVisible?"leftContainer":'noLeftContainer'}>
+        <div className={showVisible?styles.leftContainer:styles.noLeftContainer}>
             <EditJson jsonComId={jsonComId} setShowJson={setShowJson} showJson={showJson}></EditJson>
             {showVisible?<Tabs defaultActiveKey="1" items={items} onChange={onChange} />:''}
-            {showVisible?<LeftCircleTwoTone onClick={()=>{changeVisible()}} className={'flag'}/>:<RightCircleTwoTone onClick={()=>{changeVisible()}} className={'flag'}/>}
+            {showVisible?<LeftCircleTwoTone onClick={()=>{changeVisible()}} className={styles.flag}/>:<RightCircleTwoTone onClick={()=>{changeVisible()}} className={styles.flag}/>}
         </div>
     )
 }

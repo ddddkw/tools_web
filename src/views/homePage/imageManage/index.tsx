@@ -1,4 +1,4 @@
-import './index.css'
+import styles from './index.module.css'
 import {GetProp, message, Upload, UploadProps, Image, UploadFile} from "antd";
 import {useEffect, useState} from "react";
 import http from '../../../utils/request';
@@ -75,8 +75,8 @@ export function ImageManage(){
     );
 
     return(
-        <div className={'imageBody'}>
-            <div className={'newImages'}>
+        <div className={styles.imageBody}>
+            <div className={styles.newImages}>
                 <Upload
                     action="http://localhost:1023/beans/image/upload"
                     listType="picture-card"

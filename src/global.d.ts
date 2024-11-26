@@ -10,3 +10,8 @@ declare module '*.jpg';
 declare module '*.jpeg';
 declare module '*.gif';
 declare module '*.svg';
+// src/types.d.ts
+declare module '*.module.css' {
+    const classes: { [key: string]: string };
+    export default classes;
+}

@@ -1,4 +1,4 @@
-import '../pageList/index.css';
+import '../pageList/index.module.css';
 import { Divider, Input, Button, Card } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';

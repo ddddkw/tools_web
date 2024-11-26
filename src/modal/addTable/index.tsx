@@ -11,8 +11,7 @@ interface DataType {
 }
 
 export default function AddTable(props: any) {
-    const {addTableVisible,setAddTableVisible} = props;
-    const [tableName,setTableName] = useState('');
+    const {addTableVisible,setAddTableVisible,pageType,tableName, setTableName} = props;
     const [dataSource, setDataSource] = useState<DataType[]>([
         {
             key: 1,
@@ -47,8 +46,9 @@ export default function AddTable(props: any) {
             dataIndex: 'fieldName',
             key: 'fieldName',
             render:(text: any, record: any)=>{
+                console.log(record,'表格内部的record')
                 return(
-                    <Input onInput={(value:any)=>{handleInputChange('fieldName', record, value)}}></Input>
+                    <Input disabled={pageType==='preview'} value={record.fieldName} onInput={(value:any)=>{handleInputChange('fieldName', record, value)}}></Input>
                 )
             }
         },
@@ -59,7 +59,9 @@ export default function AddTable(props: any) {
             render:(text: any, record: any)=>{
                 return (
                     <Select
+                        value={record.fieldType}
                         showSearch
+                        disabled={pageType==='preview'}
                         placeholder="Select a type"
                         filterOption={(input, option) =>
                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
@@ -76,12 +78,25 @@ export default function AddTable(props: any) {
             dataIndex: 'operation',
             render: (_: any, record: any) =>
                 dataSource.length >= 1 ? (
-                    <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(_, record)}>
+                    <Popconfirm disabled={pageType==='preview'} title="Sure to delete?" onConfirm={() => handleDelete(_, record)}>
                         <a>删除</a>
                     </Popconfirm>
                 ) : null,
         },
     ];
+    useEffect(()=>{
+        if (['preview','edit'].includes(pageType)) {
+            queryColumns()
+        }
+    },[])
+    const queryColumns = function (){
+            http.get('beans/tables/getColumns',{tableName:tableName}).then((res:any)=>{
+                const list = res.data.map((item: any, index: any)=>{
+                    return {key:index+1,...item}
+                })
+                setDataSource(list)
+            })
+    };
     const handleDelete = (val: any, record:any) => {
         // eslint-disable-next-line no-debugger
         const newData = dataSource.filter((item) => item.key !== record.key);
@@ -146,10 +161,12 @@ export default function AddTable(props: any) {
         >
             <div>
                 <div style={{marginTop:'25px'}}>
-                    表名：<Input style={{width:'200px'}} onChange={(value)=>{changeTableName(value)}}></Input>
-                    <Button onClick={handleAdd} type="primary" style={{ marginBottom: 16, float:'right'}}>
-                        新增
-                    </Button>
+                    表名：<Input disabled={pageType==='preview'} style={{width:'200px', marginBottom: 16}} value={tableName} onChange={(value)=>{changeTableName(value)}}></Input>
+                    {
+                        pageType!=='preview'?<Button onClick={handleAdd} type="primary" style={{ marginBottom: 16, float:'right'}}>
+                            新增
+                        </Button>:''
+                    }
                 </div>
                 <Table
                     rowClassName={() => 'editable-row'}

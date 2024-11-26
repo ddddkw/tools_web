@@ -1,4 +1,4 @@
-import './subLayout.css';
+import styles from './subLayout.module.css';
 import { Menu } from 'antd';
 import router from "../../../routers";
 import {useNavigate} from "react-router-dom";
@@ -33,7 +33,7 @@ export function SubLayout() {
         navigate(val.path)
     }
     return (
-        <div className="layout">
+        <div className={styles.layout}>
             <Menu mode="inline" defaultSelectedKeys={defaultKeys} > {/* 你可以根据需要调整Menu的属性 */}
                 {allItems.map(item => (
                     <Menu.Item key={item.path} onClick={()=>{toRoute(item)}}>

@@ -1,4 +1,4 @@
-import './index.css';
+import styles from './index.module.css';
 import { Divider, Input, Button, Card } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
@@ -37,15 +37,15 @@ export function PageList() {
     };
 
     return (
-        <div className={'homeContainer'}>
-            <div className={'searchItem'}>
+        <div className={styles.homeContainer}>
+            <div className={styles.searchItem}>
                 <Search placeholder="input search text" allowClear onSearch={onSearch} style={{ width: 200 }} />&nbsp;&nbsp;
                 <Button onClick={toAdd}>新建页面</Button>
             </div>
             <Divider />
-            <div className={'pageBody'}>
+            <div className={styles.pageBody}>
                 {dataList.map((item) => (
-                    <Card key={item} className={'pageItem'} title="Default size card" extra={<DeleteOutlined />}>
+                    <Card key={item} className={styles.pageItem} title="Default size card" extra={<DeleteOutlined />}>
                         <Button onClick={() => previewPage(item)}>预览页面</Button>&nbsp;&nbsp;
                         <Button onClick={() => editPage(item)}>编辑页面</Button>
                     </Card>

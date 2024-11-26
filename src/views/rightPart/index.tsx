@@ -1,4 +1,4 @@
-import './index.css'
+import styles from './index.module.css'
 import {Tabs} from 'antd';
 import type { TabsProps } from 'antd';
 import {attributeMap} from "./staticUtils/attributesMaps";
@@ -24,9 +24,9 @@ export default function rightPart(){
             <div>
                 {
                     comAttributeList.map((item,index) => {
-                        return <div key={index} className='attributeItem'>
-                            <label className='attributeLabel'>{item.label}</label>
-                            <div className='attributeItemValue'>
+                        return <div key={index} className={styles.attributeItem}>
+                            <label className={styles.attributeLabel}>{item.label}</label>
+                            <div className={styles.attributeItemValue}>
                                 <InputComponent selectNode={selectNode} {...item} onChange={changeComAttribute(item.value)} />
                             </div>
                         </div>
@@ -69,9 +69,9 @@ export default function rightPart(){
                 {
                     // map是对数组中的每个元素应用一个函数
                     styleList.map((item,index) => {
-                        return <div key={index} className='attributeItem'>
-                            <label className='attributeLabel'>{item.label}</label>
-                            <div className='attributeItemValue'>
+                        return <div key={index} className={styles.attributeItem}>
+                            <label className={styles.attributeLabel}>{item.label}</label>
+                            <div className={styles.attributeItemValue}>
                                 <InputComponent selectNode={selectNode} {...item} onChange={changeComStyle(item.value)}/>
                             </div>
                         </div>

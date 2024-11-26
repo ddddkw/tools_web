@@ -1,4 +1,4 @@
-import './index.css'
+import styles from './index.module.css'
 import {useRef, useState} from "react";
 import * as components from '../leftPart/components/exportAll'
 import componentTextMap  from '../leftPart/staticUtils/itemList'
@@ -166,7 +166,7 @@ export default function mainPart(){
             // 在form表单内再添加一层拖拽事件，主要作用是用于处理在form表单内部拖拽组件
             <div onDrop={onDropContainer(com)} key={com.comId} onClick={selectCom(com)}>
                 <div draggable onDragStart={onDragStart(com)}>
-                    <div className={com.comId==selectId?'selectCom':''} style={com.style} >
+                    <div className={com.comId==selectId?styles.selectCom:''} style={com.style} >
                         <Com {...com}>
                             {
                                 com.childList&&com.childList.map((item:ComJson)=>{
@@ -181,7 +181,7 @@ export default function mainPart(){
     }
     return (
         // onDrop是被拖入的父级元素的回调事件
-        <div onDrop={onDrop} onDragOver={onDragOver} onDragEnter={onDragEnter} className='mainPart'>
+        <div onDrop={onDrop} onDragOver={onDragOver} onDragEnter={onDragEnter} className={styles.mainPart}>
             {
                 comList.map((com:ComJson) => {
                     // 获取所有已拖拽的子组件并将其渲染到画布上
