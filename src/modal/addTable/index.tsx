@@ -145,6 +145,7 @@ export default function AddTable(props: any) {
         }
         http.post('beans/tables/createTable',params).then(res=>{
             setAddTableVisible(false)
+            setTableName('')
         })
     };
     const changeTableName =function (value:any) {
