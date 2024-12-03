@@ -13,6 +13,7 @@ import {qrcodeAttribute} from "./comAttributes/qrCodeAttributes";
 import {tagAttribute} from "./comAttributes/tagAttributes";
 import {avatarAttribute} from "./comAttributes/avatarAttributes";
 import {carouselAttribute} from "./comAttributes/carouselAttributes";
+import {tableAttribute} from "./comAttributes/tableAttributes";
 
 interface AttributeMap {
     [key: string]: ComAttribute[]
@@ -40,7 +41,8 @@ const attributeMap: AttributeMap = {
     QRCode: qrcodeAttribute,
     Tag: tagAttribute,
     Avatar: avatarAttribute,
-    Carousel: carouselAttribute
+    Carousel: carouselAttribute,
+    Table: tableAttribute
 }
 export {
     attributeMap

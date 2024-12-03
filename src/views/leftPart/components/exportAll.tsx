@@ -13,6 +13,7 @@ import QRCode from "./showDataCom/qrCode";
 import Tag from './showDataCom/tag/index'
 import Avatar from "./showDataCom/avatar";
 import Carousel from "./containerCom/carousel";
+import Table from "./showDataCom/table";
 export {
     Button,
     Input,
@@ -28,5 +29,6 @@ export {
     QRCode,
     Tag,
     Avatar,
-    Carousel
+    Carousel,
+    Table
 }

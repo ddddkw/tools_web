@@ -8,6 +8,7 @@ interface DataType {
     key: number,
     fieldName: string;
     fieldType: string;
+    fieldLength: string;
 }
 
 export default function AddTable(props: any) {
@@ -17,6 +18,7 @@ export default function AddTable(props: any) {
             key: 1,
             fieldName: '',
             fieldType: '',
+            fieldLength: '',
         },
     ]);
 
@@ -46,7 +48,6 @@ export default function AddTable(props: any) {
             dataIndex: 'fieldName',
             key: 'fieldName',
             render:(text: any, record: any)=>{
-                console.log(record,'表格内部的record')
                 return(
                     <Input disabled={pageType==='preview'} value={record.fieldName} onInput={(value:any)=>{handleInputChange('fieldName', record, value)}}></Input>
                 )
@@ -71,6 +72,16 @@ export default function AddTable(props: any) {
                         style={{width:'150px'}}
                     />
                     )
+            }
+        },
+        {
+            title: '长度',
+            dataIndex: 'fieldLength',
+            key: 'fieldLength',
+            render:(text: any, record: any)=>{
+                return(
+                    <Input disabled={pageType==='preview'} value={record.fieldLength} onInput={(value:any)=>{handleInputChange('fieldLength', record, value)}}></Input>
+                )
             }
         },
         {
@@ -130,12 +141,13 @@ export default function AddTable(props: any) {
             key: dataSource.length + 1,
             fieldName: '',
             fieldType: '',
+            fieldLength:''
         };
         setDataSource([...dataSource, newData]);
         setCount(count + 1);
     };
     const addTable = () => {
-        let columns='id INT PRIMARY KEY AUTO_INCREMENT'+''
+        let columns='id VARCHAR(255) PRIMARY KEY'+''
         dataSource.forEach(item=>{
             columns=`${columns},${item.fieldName} ${item.fieldType}`
         })

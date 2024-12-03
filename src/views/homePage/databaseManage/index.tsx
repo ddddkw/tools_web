@@ -18,7 +18,7 @@ export function DatabaseManage(){
     }
     const [tableList,setTableList] = useState([]);
     const queryList = function (){
-        http.get('beans/tables/getTables').then((res:any)=>{
+        http.get('beans/tables/getTables').send(true).then((res:any)=>{
             setTableList(res.data)
         })
     }
