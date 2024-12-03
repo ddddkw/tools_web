@@ -24,6 +24,7 @@ export function PageList() {
     };
 
     const toAdd = () => {
+        Store.dispatch({type:'changeComList',value:[]})
         navigate('/BuildPage');
     };
 

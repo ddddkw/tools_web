@@ -27,6 +27,8 @@ export default function Header(props:any){
         http.post('beans/Pages/addPage',{pageName:pageName,pageJson: JSON.stringify(comList)})
             .then((res: any) => {
                 console.log(111)
+                setIsSetPageName(false)
+                navigate('/HomePage')
             })
             .catch((error: any) => {
                 console.error('Error fetching data:', error);
