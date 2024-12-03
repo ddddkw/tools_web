@@ -4,6 +4,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import http from '../../../utils/request';
 import {useEffect, useState} from "react";
+import Store from "../../../store";
 
 const { Search } = Input;
 
@@ -39,24 +40,34 @@ export function PageList() {
     const previewPage = (val: any) => {
         http.get('beans/Pages/queryDetail',{id:val.id})
             .then((res: any) => {
-                console.log(111)
+                Store.dispatch({type:'changeComList',value:JSON.parse(res.data.pageJson)})
+                navigate(`/PreviewPage`);
             })
             .catch((error: any) => {
                 console.error('Error fetching data:', error);
             });
-        navigate(`/BuildPage?preview=${val}`);
+
     };
 
     const editPage = (val: any) => {
         http.get('beans/Pages/queryDetail',{id:val.id})
             .then((res: any) => {
-                console.log(111)
+                Store.dispatch({type:'changeComList',value:JSON.parse(res.data.pageJson)})
+                navigate(`/BuildPage`);
             })
             .catch((error: any) => {
                 console.error('Error fetching data:', error);
             });
-        navigate(`/BuildPage?edit=${val}`);
     };
+    const deletePage=function (val: any) {
+        http.get('beans/Pages/deletePage',{id:val.id})
+            .then((res: any) => {
+                queryList()
+            })
+            .catch((error: any) => {
+                console.error('Error fetching data:', error);
+            });
+    }
 
     return (
         <div className={styles.homeContainer}>
@@ -67,7 +78,7 @@ export function PageList() {
             <Divider />
             <div className={styles.pageBody}>
                 {pageList.map((item:any) => (
-                    <Card key={item} className={styles.pageItem} title={item.pageName} extra={<DeleteOutlined />}>
+                    <Card key={item} className={styles.pageItem} title={item.pageName} extra={<DeleteOutlined onClick={()=>{deletePage(item)}}/>}>
                         <Button onClick={() => previewPage(item)}>预览页面</Button>&nbsp;&nbsp;
                         <Button onClick={() => editPage(item)}>编辑页面</Button>
                     </Card>
