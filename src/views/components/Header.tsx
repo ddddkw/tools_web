@@ -5,11 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import http from "../../utils/request";
 import Store from "../../store";
 import {useState} from "react";
+import { useLocation } from 'react-router-dom';
 export default function Header(props:any){
     const navigate = useNavigate();
     const {homePage} = props
     const [isSetPageName , setIsSetPageName] = useState(false)
     const [pageName , setPageName] = useState('')
+    const location = useLocation();
+    const { type, id, editPageName } = location.state || {};
     const toGitHub = function () {
         window.open('https://github.com/ddddkw/tools_web/')
     }
@@ -17,7 +20,19 @@ export default function Header(props:any){
         navigate('/HomePage')
     })
     const addPage = () => {
-        setIsSetPageName(true)
+        const comList = Store.getState().comList;
+        if (type==='edit') {
+            http.post('beans/Pages/updatePage',{id:id, pageName:editPageName,pageJson: JSON.stringify(comList)})
+                .then((res: any) => {
+                    setIsSetPageName(false)
+                    navigate('/HomePage')
+                })
+                .catch((error: any) => {
+                    console.error('Error fetching data:', error);
+                });
+        } else {
+            setIsSetPageName(true)
+        }
     };
     const changePageName = function (e:any) {
         setPageName(e.target.value)
@@ -33,6 +48,7 @@ export default function Header(props:any){
             .catch((error: any) => {
                 console.error('Error fetching data:', error);
             });
+
     }
     return (
         <div className={'HeaderContainer'}>

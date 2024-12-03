@@ -39,7 +39,7 @@ export function PageList() {
     };
 
     const previewPage = (val: any) => {
-        http.get('beans/Pages/queryDetail',{id:val.id})
+        http.get('beans/Pages/queryDetail',{id:val.id}).send(true)
             .then((res: any) => {
                 Store.dispatch({type:'changeComList',value:JSON.parse(res.data.pageJson)})
                 navigate(`/PreviewPage`);
@@ -51,10 +51,10 @@ export function PageList() {
     };
 
     const editPage = (val: any) => {
-        http.get('beans/Pages/queryDetail',{id:val.id})
+        http.get('beans/Pages/queryDetail',{id:val.id}).send(true)
             .then((res: any) => {
                 Store.dispatch({type:'changeComList',value:JSON.parse(res.data.pageJson)})
-                navigate(`/BuildPage`);
+                navigate(`/BuildPage`, { state: { type: 'edit', id: val.id, editPageName:val.pageName } });
             })
             .catch((error: any) => {
                 console.error('Error fetching data:', error);
