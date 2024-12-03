@@ -12,7 +12,7 @@ export function DataMaintenance(props:any){
     const [addColumns,setAddColumns] = useState<any>([]);
     const [addFileList,setAddFileList] = useState<any>([])
     const [isModalOpen,setIsModalOpen] = useState(false)
-    const [addForm,setAddForm] = useState([])
+    const [addForm,setAddForm] = useState({})
     const [form] = Form.useForm();
     useEffect(()=>{
         queryColumns()
@@ -75,9 +75,10 @@ export function DataMaintenance(props:any){
         }
     };
     const  inputData= function (e:any,value:any) {
-        const middleForm:any = {}
-        middleForm[value] = e.target.value
-        setAddForm(middleForm)
+        setAddForm(prevState => ({
+            ...prevState,
+            [value]: e.target.value
+        }));
     }
     return(
         <div className={styles.dataMaintenanceBody}>
