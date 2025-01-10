@@ -87,7 +87,7 @@ export function DataMaintenance(props:any){
                 {
                     tableName==='images'?
                         <Upload
-                        action="http://localhost:1023/beans/image/upload"
+                        action="http://www.peaceandlove.asia/beans/image/upload"
                         fileList={addFileList}
                         onChange={handleChange}
                     >
