@@ -78,7 +78,7 @@ export function ImageManage(){
         <div className={styles.imageBody}>
             <div className={styles.newImages}>
                 <Upload
-                    action="http://localhost:1023/beans/image/upload"
+                    action="http://www.peaceandlove.asia/beans/image/upload"
                     listType="picture-card"
                     fileList={fileList}
                     onPreview={handlePreview}
